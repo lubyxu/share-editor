@@ -1,10 +1,9 @@
 import React from 'react'
 
-import { ExampleComponent } from 'share-editor'
-import 'share-editor/dist/index.css'
+import ShareEditor from 'share-editor';
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return <ShareEditor  />
 }
 
 export default App

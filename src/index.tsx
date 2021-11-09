@@ -1,10 +1,16 @@
-import * as React from 'react'
-import styles from './styles.module.css'
+import React, { useRef } from 'react';
+import useQuill from './hooks/useQuill';
+import Siderbar from './components/Siderbar';
 
-interface Props {
-  text: string
-}
+const ShareEditor = () => {
+    const ref: any = useRef();
+    useQuill(ref);
 
-export const ExampleComponent = ({ text }: Props) => {
-  return <div className={styles.test}>Example Component: {text}</div>
-}
+    return (
+        <div>
+            <div ref={ref}></div>
+        </div>
+    );
+};
+
+export default ShareEditor;
