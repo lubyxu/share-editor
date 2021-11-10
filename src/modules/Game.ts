@@ -1,6 +1,6 @@
-import Parchment from 'parchment';
+import Quill from 'quill';
 
-
+const Parchment = Quill.import('parchment')
 function sanitize(url, protocols) {
     let anchor = document.createElement('a');
     anchor.href = url;
@@ -18,10 +18,9 @@ const ATTRIBUTES = [
 class Game extends Parchment.Embed {
   static create(value) {
     let node = super.create(value);
-    console.log(`value`, value)
-    if (typeof value === 'string') {
-      node.setAttribute('src', this.sanitize(value));
-    }
+
+    // node.innerText = value;
+    node.setAttribute('src', value);
     return node;
   }
 
@@ -43,6 +42,7 @@ class Game extends Parchment.Embed {
   }
 
   static value(domNode) {
+    //   return domNode.innerText
     return domNode.getAttribute('src');
   }
 

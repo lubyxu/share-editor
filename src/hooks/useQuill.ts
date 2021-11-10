@@ -6,6 +6,7 @@ import Quill from 'quill';
 import QuillCursors from 'quill-cursors';
 import Siderbar from '../modules/Siderbar';
 import Game from '../modules/Game';
+import { showModal } from '../components/GameTest';
 import Icon from '../icons';
 import Delta from 'quill-delta';
 import Emitter from 'quill/core/emitter';
@@ -15,6 +16,10 @@ Quill.register('ui/icons', Icon);
 
 Quill.register('modules/cursors', QuillCursors);
 Quill.register('modules/siderbar', Siderbar);
+
+function showGameTestModal() {
+    return Promise.resolve('https://quilljs.com/assets/images/icon.png');
+}
 
 
 const useQuill = (ref) => {
@@ -26,7 +31,6 @@ const useQuill = (ref) => {
             ydoc
         );
         const ytext = ydoc.getText('quill');
-        console.log(`ref.current`, ref.current)
         const editorContainer = ref.current;
         // editorContainer.setAttribute('id', 'editor');
         document.body.insertBefore(editorContainer, null);
@@ -49,13 +53,14 @@ const useQuill = (ref) => {
         });
 
         const toolbar = editor.getModule('toolbar');
-        toolbar.addHandler('game', function () {
+        toolbar.addHandler('game', async function () {
+            const data = await showModal();
             // 弹窗选择图片
             let range = this.quill.getSelection(true);
             editor.updateContents(new Delta()
                     .retain(range.index)
                     .delete(range.length)
-                    .insert('hello')
+                    .insert({ game: data })
                   , Emitter.sources.USER);
         })
 

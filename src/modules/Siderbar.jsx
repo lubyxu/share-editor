@@ -31,9 +31,9 @@ export default class Siderbar {
         const bounds = this.quill.getBounds(index);
         console.log(`bounds`, bounds);
 
-        if (length === 0) {
-        this.insert();
-        }
+        // if (length === 0 && source === ) {
+        // this.insert();
+        // }
     }
 
     insert() {
