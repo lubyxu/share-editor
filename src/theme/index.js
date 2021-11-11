@@ -6,7 +6,7 @@ import BubbleTheme from 'quill/themes/bubble';
 import Siderbar from '../components/Siderbar';
 import tooltip from '../store/tooltip';
 import icons from '../icons';
-import Toolbar from '../components/Toolbar';
+import renderToolbar from '../components/Toolbar';
 import Theme from 'quill/core/theme';
 
 
@@ -110,10 +110,10 @@ export default class WhaleTheme extends Theme {
 
     extendToolbar(toolbar) {
         // 渲染siderbar组件
-        const siderbar = this.quill.getModule('siderbar');
-        
+        // const siderbar = this.quill.getModule('siderbar');
+        // renderToolbar(siderbar.container);
         const menus = React.createElement(Toolbar, { onHandler: this.onHandler.bind(this),  quill: this.quill })
-        this.tooltip = new WhaleTooltip(this.quill, this.options);
+        this.tooltip = new WhaleTooltip(this.quill, { ...this.options, menus });
         this.tooltip.append(menus);
         // this.siderbar.root.append(menus);
         // this.tooltip.root.appendChild(toolbar.container);

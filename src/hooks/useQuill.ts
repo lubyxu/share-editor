@@ -16,7 +16,7 @@ Quill.register('formats/game', Game);
 Quill.register('ui/icons', Icon);
 
 Quill.register('modules/cursors', QuillCursors);
-Quill.register('modules/siderbar', Siderbar);
+// Quill.register('modules/siderbar', Siderbar);
 
 Quill.register('themes/whale', WhaleTheme);
 
@@ -40,7 +40,7 @@ const useQuill = (ref) => {
                 history: {
                     userOnly: true
                 },
-                siderbar: [
+                toolbar: [
                     [{ header: [1, 2, false] }],
                     ['bold', 'italic', 'underline', 'image', 'code-block', 'game']
                 ]

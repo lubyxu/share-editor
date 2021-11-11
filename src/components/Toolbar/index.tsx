@@ -1,11 +1,15 @@
 import React from 'react';
-import { Menu } from '@whale-labs/want';
-import { SettingOutlined, BoldOutlined } from '@ant-design/icons'; 
+import ReactDOM from 'react-dom';
+import { Menu, Dropdown } from '@whale-labs/want';
+import { SettingOutlined, BoldOutlined, UnorderedListOutlined } from '@ant-design/icons'; 
 import Quill from 'quill';
 import { observer } from 'mobx-react';
+import tooltip from '../../store/tooltip';
+import menu from '../../store/menu';
+import Layer from '../Layer';
 
 const { SubMenu } = Menu;
-function Toolbar({ onHandler, quill, selectedKeys }) {
+function Toolbar({ tooltip, quill, menu, container }) {
 
     const handleClick = (e) => {
         const key = e.key;
@@ -27,29 +31,21 @@ function Toolbar({ onHandler, quill, selectedKeys }) {
             quill.format(attrVal, true, Quill.sources.USER);
         }
 
-
-        // if (key === 'h1') {
-        //     
-        // }
-        // else {
-        //     
-        // }
     };
 
+
     return (
-        <Menu onClick={handleClick} selectedKeys={selectedKeys}>
-            <SubMenu key="header" title="字体">
-                <Menu.Item key={1} >H1</Menu.Item>
-                <Menu.Item key={2} >H2</Menu.Item>
-                <Menu.Item key={3} >H3</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="bold"><BoldOutlined /></Menu.Item>
-            <SubMenu key="other" icon={<SettingOutlined />} title="在下方添加">
-                <Menu.Item key="image">图片</Menu.Item>
-                <Menu.Item key="game">来自自定义素材</Menu.Item>
-            </SubMenu>
-        </Menu>
-    )
+        <Layer container={container} visible={tooltip.visible} target={tooltip.target}>
+            <Dropdown overlay={menus} placement="bottomRight">
+                <Button shape="circle" size="small" icon={<UnorderedListOutlined />} />
+            </Dropdown>
+        </Layer>
+    );
 }
 
-export default observer(Toolbar);
+const ObserveToolbar = observer(Toolbar);
+
+
+export default function renderToolbar(container, quill) {
+    ReactDOM.render(<ObserveToolbar tooltip={tooltip} quill={quill} menu={menu} container={container} />, container);
+}
