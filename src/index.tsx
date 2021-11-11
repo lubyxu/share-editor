@@ -8,7 +8,7 @@ const ShareEditor = () => {
 
     return (
         <div>
-            <div ref={ref}></div>
+            <div style={{marginLeft: 100, height: 400, border: '1px solid #000'}} ref={ref}></div>
         </div>
     );
 };

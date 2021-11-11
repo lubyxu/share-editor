@@ -5,11 +5,12 @@ import { QuillBinding } from 'y-quill';
 import Quill from 'quill';
 import QuillCursors from 'quill-cursors';
 import Siderbar from '../modules/Siderbar';
-import Game from '../modules/Game';
+import Game from '../formats/Game';
 import { showModal } from '../components/GameTest';
 import Icon from '../icons';
 import Delta from 'quill-delta';
 import Emitter from 'quill/core/emitter';
+import WhaleTheme from '../theme';
 
 Quill.register('formats/game', Game);
 Quill.register('ui/icons', Icon);
@@ -17,9 +18,7 @@ Quill.register('ui/icons', Icon);
 Quill.register('modules/cursors', QuillCursors);
 Quill.register('modules/siderbar', Siderbar);
 
-function showGameTestModal() {
-    return Promise.resolve('https://quilljs.com/assets/images/icon.png');
-}
+Quill.register('themes/whale', WhaleTheme);
 
 
 const useQuill = (ref) => {
@@ -38,18 +37,16 @@ const useQuill = (ref) => {
         const editor = new Quill(editorContainer, {
             modules: {
                 cursors: true,
-                toolbar: [
-                    [{ header: [1, 2, false] }],
-                    ['bold', 'italic', 'underline'],
-                    ['image', 'code-block', 'game']
-                ],
                 history: {
                     userOnly: true
                 },
-                siderbar: {}
+                siderbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline', 'image', 'code-block', 'game']
+                ]
             },
             placeholder: 'Start collaborating...',
-            theme: 'snow' // or 'bubble'
+            theme: 'whale' // or 'bubble'
         });
 
         const toolbar = editor.getModule('toolbar');

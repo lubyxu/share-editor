@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SiderbarComponent from '../components/Siderbar';
+import Siderbar from '../components/Siderbar';
+import menu from '../store/menu';
+import tooltip from '../store/tooltip';
 
-export default class Siderbar {
+export default class SiderbarModule {
     static DEFAULT =  {
         containerClass: 'ql-siderbar',
     };
@@ -14,13 +16,33 @@ export default class Siderbar {
         };
         // this.container = document.querySelector(options);
         this._container = this.quill.addContainer(this.options.containerClass);
-        quill.on(this.quill.constructor.events.SELECTION_CHANGE, this.onChange.bind(this));
 
-        console.log('this._container :>> ', this._container);
+        ReactDOM.render(React.createElement(Siderbar, { tooltip }), this._container);
+        
+        // selection 改变，获取formats， 回填至 menus 中
+        quill.on(this.quill.constructor.events.SELECTION_CHANGE, this.onSelectionChange.bind(this));
 
-        ReactDOM.render(<SiderbarComponent />, this._container);
     }
 
+    onSelectionChange(range, source) {
+        if (!range) {
+            return;
+        }
+        const format = this.quill.getFormat(range);
+
+        const selectedKeys = Object.keys(format).reduce((prev, key) => {
+            if (key === 'header') {
+                prev.push(key);
+                prev.push(format[key]);
+            }
+            else {
+                prev.push(key);
+            }
+            return prev;
+        }, []);
+
+        menu.setSelectedKeys(selectedKeys);
+    }
     onChange(range, oldRange, source) {
         console.log('source :>> ', source);
         if (!range) {
@@ -28,8 +50,8 @@ export default class Siderbar {
         }
         const { index, length } = range;
 
-        const bounds = this.quill.getBounds(index);
-        console.log(`bounds`, bounds);
+        // const bounds = this.quill.getBounds(index);
+        // console.log(`bounds`, bounds);
 
         // if (length === 0 && source === ) {
         // this.insert();
