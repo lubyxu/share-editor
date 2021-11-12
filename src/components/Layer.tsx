@@ -18,13 +18,12 @@ export default function Layer({ visible, container, children, target }) {
             <Portal
                 // wrapperClassName={`whale-map-workflow-mask ${!visible ? 'whale-map-workflow-mask-hidden' : ''}`}
                 visible={visible}
-                getContainer={() => container || document.body}
+                getContainer={() => document.body}
                 // @ts-ignore
                 show={visible}
                 key="select-panel"
             >
                 {() => {
-                    console.log('target :>> ', target);
                     return (
                         <Align
                             align={align}

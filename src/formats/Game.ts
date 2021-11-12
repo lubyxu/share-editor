@@ -21,6 +21,7 @@ class Game extends Parchment.Embed {
 
     // node.innerText = value;
     node.setAttribute('src', value);
+    console.log(`node`, node);
     return node;
   }
 
@@ -58,6 +59,7 @@ class Game extends Parchment.Embed {
     }
   }
 }
+
 Game.blotName = 'game';
 Game.tagName = 'IMG';
 

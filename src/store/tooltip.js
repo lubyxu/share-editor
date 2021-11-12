@@ -8,6 +8,7 @@ class Tooltip {
     visible = false;
     position = {};
     target = null;
+    children = null;
 
     constructor() {
         makeAutoObservable(this);
@@ -18,6 +19,9 @@ class Tooltip {
     }
     hide() {
         this.visible = false;
+    }
+    toggle() {
+        this.visible = !this.visible;
     }
     setTarget(tar) {
         this.target = tar;

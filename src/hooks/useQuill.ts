@@ -16,7 +16,7 @@ Quill.register('formats/game', Game);
 Quill.register('ui/icons', Icon);
 
 Quill.register('modules/cursors', QuillCursors);
-// Quill.register('modules/siderbar', Siderbar);
+Quill.register('modules/siderbar', Siderbar);
 
 Quill.register('themes/whale', WhaleTheme);
 
@@ -25,7 +25,7 @@ const useQuill = (ref) => {
     useEffect(() => {
         const ydoc = new Y.Doc();
         const provider = new WebsocketProvider(
-            'ws://localhost:1234',
+            'ws://192.168.194.237:1235',
             'quill-demo-2',
             ydoc
         );
@@ -43,23 +43,24 @@ const useQuill = (ref) => {
                 toolbar: [
                     [{ header: [1, 2, false] }],
                     ['bold', 'italic', 'underline', 'image', 'code-block', 'game']
-                ]
+                ],
+                siderbar: true
             },
             placeholder: 'Start collaborating...',
             theme: 'whale' // or 'bubble'
         });
 
-        const toolbar = editor.getModule('toolbar');
-        toolbar.addHandler('game', async function () {
-            const data = await showModal();
-            // 弹窗选择图片
-            let range = this.quill.getSelection(true);
-            editor.updateContents(new Delta()
-                    .retain(range.index)
-                    .delete(range.length)
-                    .insert({ game: data })
-                  , Emitter.sources.USER);
-        })
+        // const toolbar = editor.getModule('toolbar');
+        // toolbar.addHandler('game', async function () {
+        //     const data = await showModal();
+        //     // 弹窗选择图片
+        //     let range = this.quill.getSelection(true);
+        //     editor.updateContents(new Delta()
+        //             .retain(range.index)
+        //             .delete(range.length)
+        //             .insert({ game: data })
+        //           , Emitter.sources.USER);
+        // })
 
         const binding = new QuillBinding(ytext, editor, provider.awareness);
     }, []);
